@@ -1,0 +1,23 @@
+.button{
+    height:45px;
+    border-radius:8px;
+    border: none;
+    background-color:#1B1842;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+    cursor: pointer;
+
+    &:not(:disabled):hover{
+        filter: brightness(0.85);
+    }
+    &:disabled{
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}

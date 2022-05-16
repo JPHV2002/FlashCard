@@ -1,0 +1,108 @@
+#page-auth{
+    display: flex;
+    align-items: stretch;
+    height: 100vh;
+
+    aside{
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items: center;
+
+        flex: 6;
+        background-color:#1B1842;
+        color: #EBEDF2;
+        
+        #title{     
+            font-size: 3vw;
+            #flash{
+                color: #FF5050;
+            }
+        }
+        p{
+            margin-bottom: 60vh;
+        }
+    }
+    main{
+        flex: 8;
+        display: flex;
+        
+        justify-content:center;
+        align-items: center;
+
+        .login-google{
+            height:45px;
+            border-radius:8px;
+            border: none;
+            background-color:#FF5050;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+
+            display: flex;
+            justify-content:center;
+            align-items: center;
+
+            cursor: pointer;
+
+            &:hover{
+                filter: brightness(0.85);
+            }
+
+            img{
+                height:30px;
+                margin-right:25px;
+            }
+        }
+    }
+    .main-content{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: stretch;
+        max-width: 350px;
+        text-align: center;
+
+        form{
+            input{
+                height:45px;
+                width: 100%;
+                border: 1px solid #1B1842;
+                border-radius: 8px;
+                padding: 1px 16px;
+                margin-bottom: 10px;
+                background-color: #fff;
+            }
+            button{
+                border-radius: 8px;
+                height:45px;
+                width: 100%;
+                cursor:pointer;
+            }
+        }
+    }
+    .separator{
+        font-size: 14px;
+        color: #1B1842;
+
+        margin: 10px;
+
+        display: flex;
+        align-items:center;
+
+        &::before{
+            content:'';
+            flex: 1;
+            height: 1px;
+            background:#1B1842;
+            margin-right: 10px;
+        }
+        &::after{
+            content:'';
+            flex: 1;
+            height: 1px;
+            background:#1B1842;
+            margin-left: 10px;
+        }
+    }
+}
