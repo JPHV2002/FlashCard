@@ -1,0 +1,33 @@
+#page-home{
+    background:#1B1842;
+    color:#EBEDF2;
+    header{
+        height: 70px;
+        display: flex;
+        align-items:center;
+        justify-content: space-between;
+
+        #title{
+            margin-left: 15px;
+            font-size: 20px;
+            #flash{
+                color: #FF5050;
+            }
+        }  
+        #user-id{
+            display: flex;
+            align-items:center;
+            label{
+                font-size: 22px;
+                margin-right: 10px;
+            }
+            img{
+                
+                margin-right: 15px;
+                height:50px;
+            }   
+        }
+    }
+}
+
+

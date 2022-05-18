@@ -1,22 +1,20 @@
 import { useNavigate } from 'react-router-dom'
 
 import {Button} from '../components/Button'
-
-import { auth, firebase } from '../services/firebase'
-
 import googleIconImg from '../assets/images/google-icon.svg'
-
 import '../styles/auth.scss'
+
+import { useAuth } from "../hooks/useAuth"
 
 export function Auth(){
     const navigate = useNavigate();
+    const {user,signInWithGoogle } = useAuth()
 
-    function handleLoginWithGoogle(){
-        const provider = new firebase.auth.GoogleAuthProvider();
-
-        auth.signInWithPopup(provider).then(result => {
-            navigate('/home');
-        })
+    async function handleNavigateToHome(){
+        if (!user){
+            await signInWithGoogle();
+        }
+        navigate('/home');
     }
     return(
         <div id="page-auth">
@@ -30,7 +28,7 @@ export function Auth(){
             </aside>
             <main>
                 <div className="main-content">
-                    <button className="login-google" onClick = {handleLoginWithGoogle}>
+                    <button className="login-google" onClick = {handleNavigateToHome}>
                         <img src={googleIconImg} alt="Logo do Google"/>
                         Faça login o Google
                     </button>
