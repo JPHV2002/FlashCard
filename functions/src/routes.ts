@@ -1,11 +1,13 @@
 import { Router } from 'express'
 
 import{
-    creatFlashCard
-} from './controllers/AdminController'
+    createFlashCard,
+    getFlashCard
+} from './controllers/FlashCard/crud'
 
 const router = Router()
 
-router.get('/',creatFlashCard )
+router.get('/flashcard', getFlashCard)
+router.post('/flashcard', createFlashCard)
 
 export default router
