@@ -1,11 +1,8 @@
-import express from 'express';
+import app from './app'
 
-const app = express();
+const port = 8080
+const host = '0.0.0.0'
 
-app.get('/', (req, res) => {
-    return res.send('HELLO WORLD');
-});
-
-app.listen(3333, () => {
-    console.log('Server is running on http://localhost:3333');
-});
+app.listen(port, host, () => {
+    console.log(`App is running on http://loalhost/${port}/`)
+})
