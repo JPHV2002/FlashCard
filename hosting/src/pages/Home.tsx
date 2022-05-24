@@ -1,15 +1,16 @@
 import { useAuth } from "../hooks/useAuth"
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { DeckList } from "../components/DeckList";
+import api from "../services/api";
 
 import '../styles/home.scss'
 
-//import '../services/api'
-import api from "../services/api";
-
 export function Home(){
     const { user } = useAuth();
+    const [collection, setCollection] = useState([]);
 
+    /*POST
     useEffect(() => {
         api.post("/createFlashCard", {
             userId: "123",
@@ -21,7 +22,7 @@ export function Home(){
         .then(response => {
             console.log(response)
         })
-    })
+    })*/
 
     /** GET
      * api.post("/flashcard", {
@@ -46,7 +47,8 @@ export function Home(){
                 </div>
             </header>
             <aside>
-
+                <h2>Seus Decks</h2>
+                <DeckList/>
             </aside>
             <main>
 

@@ -1,6 +1,7 @@
 #page-home{
     background:#1B1842;
     color:#EBEDF2;
+    height: 100vh;
     header{
         height: 70px;
         display: flex;
@@ -26,6 +27,23 @@
                 margin-right: 15px;
                 height:50px;
             }   
+        }
+    }
+
+    aside{
+        margin-left: 15px;
+        border-radius: 12px;
+        float: left;
+        justify-content: center;
+        min-width: 250px;
+        width: 20%;
+        height: 87%;
+        background-color: #12102d;
+        h2{
+            margin-top: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 400;
         }
     }
 }

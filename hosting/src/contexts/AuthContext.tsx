@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { auth, firebase } from "../services/firebase";
-
+import api from "../services/api";
 
 type AuthContextType = {
     user: User | undefined;
@@ -34,6 +34,7 @@ export function AuthContextProvider(props: AuthContextProviderProps){
             id: uid,
             avatar: photoURL
             })
+
         }
         })
         return() => {
@@ -51,11 +52,15 @@ export function AuthContextProvider(props: AuthContextProviderProps){
             if(!displayName || !photoURL){
                 throw new Error("Faltam informações da Conta Google.");
             }
+            /*api.post("/createUser", {
+                userId: uid
+            })*/
             setUser({
                 name: displayName,
                 id: uid,
                 avatar: photoURL
             })
+
         }
     }
     return (
