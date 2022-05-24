@@ -11,15 +11,26 @@ export function Home(){
     const { user } = useAuth();
 
     useEffect(() => {
-        api.get("/flashcard", {params:{
-            userId: '1',
-            deck: 'deck_1',
-            flashCardId: 'flashcard1' 
-        }})
+        api.post("/createFlashCard", {
+            userId: "123",
+	        deck: "deck_1",
+	        flashCardId: "excudo",
+            term: "espada",
+	        definition: "SOU ESPADA MEU IRMÃO"
+        })
         .then(response => {
             console.log(response)
         })
     })
+
+    /** GET
+     * api.post("/flashcard", {
+            userId: "123",
+	        deck: "deck_1",
+	        flashCardId: "excudo",
+        })
+     * 
+     */
 
     return(
         <div id = "page-home">
