@@ -1,8 +1,6 @@
 import { KeyboardEvent, useState } from "react";
 import { ReactNode } from 'react';
 
-//import '../styles/label.scss';
-
 type EditableLabelProps = {
     text: string;
     type: string;

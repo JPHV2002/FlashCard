@@ -1,6 +1,8 @@
+html, body{background:#1B1842;height:100%;}
 #page-home{
     background:#1B1842;
     color:#EBEDF2;
+    width: 100vw;
     height: 100vh;
     header{
         height: 70px;
@@ -37,7 +39,8 @@
         justify-content: center;
         min-width: 250px;
         width: 20%;
-        height: 87%;
+        min-height: 87%;
+        height: auto !important;
         background-color: #12102d;
         h2{
             margin-top: 5px;
@@ -72,7 +75,6 @@
             min-width: 150px;
             width: 20%;
             height: 90%;
-            background-color: #12102d;
             h2{
                 font-size: 18px;
                 margin-top: 5px;
@@ -80,7 +82,6 @@
                 text-align: center;
                 font-weight: 400;
             }
-
             img{
                 height:15px;
             }
