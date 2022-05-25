@@ -23,3 +23,17 @@ export async function createUser(req:Request, res:Response) {
         return res.status(400).json(error)
     }
 }
+
+export async function getAllDecks(req:Request, res:Response) {
+    const parms: createUserParms = {
+        userId: req.body.userId
+    } 
+
+    try{
+        const data = await getFirestore().collection(parms.userId).get()
+        const decks = await data.docs.map(doc => {return doc.data().deckName})
+        return res.status(200).json(decks)
+    }catch (error) {
+        return res.status(400).json(error)
+    }
+}
