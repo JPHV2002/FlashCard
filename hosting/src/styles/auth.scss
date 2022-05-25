@@ -26,11 +26,11 @@
     main{
         flex: 8;
         display: flex;
-        
         justify-content:center;
         align-items: center;
 
         .login-google{
+            margin: 0;
             height:45px;
             border-radius:8px;
             border: none;
@@ -62,7 +62,7 @@
         align-items: stretch;
         max-width: 350px;
         text-align: center;
-
+        
         form{
             input{
                 height:45px;
@@ -74,6 +74,7 @@
                 background-color: #fff;
             }
             button{
+                margin: 0;
                 border-radius: 8px;
                 height:45px;
                 width: 100%;
