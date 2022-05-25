@@ -18,7 +18,7 @@ export async function createFlashCard(req:Request, res:Response){
     }
 
     try {
-        await getFirestore().collection(userData.userId).doc('decks').collection(userData.deck).doc(userData.flashCardId).set(flashcard)
+        await getFirestore().collection(userData.userId).doc(userData.deck).collection('Flashcard').doc(userData.flashCardId).set(flashcard)
         return res.status(200).json({
             response: "Data created",
             data: flashcard
@@ -36,7 +36,7 @@ export async function getFlashCard(req:Request, res:Response) {
     }
 
     try {
-        const data = await getFirestore().collection(parms.userId).doc('decks').collection(parms.deck).doc(parms.flashCardId).get()
+        const data = await getFirestore().collection(parms.userId).doc(parms.deck).collection('Flashcard').doc(parms.flashCardId).get()
         if(data.exists){
             const flashcard= data.data()
             return res.status(200).json({data: flashcard})

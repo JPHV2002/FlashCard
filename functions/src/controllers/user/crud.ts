@@ -9,13 +9,13 @@ export async function createUser(req:Request, res:Response) {
         userId: req.body.userId
     } 
 
-    const flashcard: flashcardData = {
-        term: 'First',
-        definition: 'FlashCard'
+    const deckInfo = {
+        deckId: 'First Deck',
+        deckName: 'First Deck'
     }
 
     try {
-        await getFirestore().collection(parms.userId).doc('decks').collection('default').doc('first').set(flashcard)
+        await getFirestore().collection(parms.userId).doc(deckInfo.deckId).set(deckInfo)
         return res.status(200).json({
             response: "User Created",
             data: parms.userId
