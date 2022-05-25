@@ -48,4 +48,44 @@
     }
 }
 
+@media (max-width: 800px) {
+    #page-home {
+        header{
+            height: 60px;
+            #title{
+                font-size: 12px;
+            }  
+            #user-id{
+                label{
+                    font-size: 18px;
+                }
+                img{
+                    height:35px;
+                }   
+            }
+        }
+        aside{
+            margin-left: 15px;
+            border-radius: 12px;
+            float: left;
+            justify-content: center;
+            min-width: 150px;
+            width: 20%;
+            height: 90%;
+            background-color: #12102d;
+            h2{
+                font-size: 18px;
+                margin-top: 5px;
+                margin-bottom: 20px;
+                text-align: center;
+                font-weight: 400;
+            }
+
+            img{
+                height:15px;
+            }
+        }
+    }
+  }
+
 

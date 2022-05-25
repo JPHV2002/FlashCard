@@ -31,4 +31,32 @@ input[type=text] {
     border: none;
     border-bottom: 2px solid white;
     box-sizing: border-box;
-  }
+}
+
+@media (max-width: 800px) {
+    .item{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        margin-left: 15px;
+        font-size: 15px;
+        overflow-wrap: break-word;
+    }
+    
+    button{
+        margin-left:15px;
+        border:none;
+        cursor: pointer;
+        img{
+            margin-right: 20px;
+            height: 20px;
+        }
+    }
+    input[type=text] {
+        margin-left:4px;
+        font-size: 15px;
+        overflow-wrap: break-word;
+        width: 100%;
+    }
+}

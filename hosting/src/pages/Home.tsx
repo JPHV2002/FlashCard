@@ -51,7 +51,7 @@ export function Home(){
                 <DeckList/>
             </aside>
             <main>
-
+                <h2>Main</h2>
             </main>
         </div>
     );

@@ -30,7 +30,7 @@ export function Auth(){
                 <div className="main-content">
                     <button className="login-google" onClick = {handleNavigateToHome}>
                         <img src={googleIconImg} alt="Logo do Google"/>
-                        Faça login o Google
+                        Faça login com o Google
                     </button>
                     <div className="separator">ou faça login com seu email</div>
                     <form>   
