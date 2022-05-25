@@ -2,7 +2,6 @@ import {Request, Response} from "express";
 import { getFirestore } from "../../services/firebase";
 
 import { createUserParms } from "./user";
-import { flashcardData } from "../FlashCard/flashcard";
 
 export async function createUser(req:Request, res:Response) {
     const parms: createUserParms = {
