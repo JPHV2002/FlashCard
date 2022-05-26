@@ -8,7 +8,7 @@ import '../styles/home.scss'
 
 export function Home(){
     const { user } = useAuth();
-    const [collection, setCollection] = useState([]);
+    const [deck, setDeck] = useState();
 
     /*POST
     useEffect(() => {

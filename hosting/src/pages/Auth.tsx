@@ -14,6 +14,7 @@ export function Auth(){
         if (!user){
             await signInWithGoogle();
         }
+        
         navigate('/home');
     }
     return(

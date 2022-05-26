@@ -29,6 +29,9 @@ export function AuthContextProvider(props: AuthContextProviderProps){
             if(!displayName || !photoURL){
                 throw new Error("Faltam informações da Conta Google.");
             }
+            api.post("/createUser", {
+                userId: uid
+            })
             setUser({
             name: displayName,
             id: uid,
@@ -52,9 +55,9 @@ export function AuthContextProvider(props: AuthContextProviderProps){
             if(!displayName || !photoURL){
                 throw new Error("Faltam informações da Conta Google.");
             }
-            /*api.post("/createUser", {
+            api.post("/createUser", {
                 userId: uid
-            })*/
+            })
             setUser({
                 name: displayName,
                 id: uid,

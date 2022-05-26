@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../hooks/useAuth"
 import {EditableLabel} from "./EditableLabel"
+
+import api from "../services/api";
 
 import addIcon from "../assets/images/addIcon.svg"
 import deleteIcon from "../assets/images/deleteIcon.svg"
@@ -13,27 +16,76 @@ type DeckProps = {
 }
 
 export function DeckList(){
+    const { user } = useAuth();
     const [list, setList] = useState<DeckProps[]>([]);
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(0);
+    const [idList, setIdList] = useState<Number[]>([]);
+
+    useEffect(() => {
+        const userId = user?.id || " "
+        api.post("/getDecksNames", {
+            userId: userId
+        }).then((response) => {
+            console.log(response.data);
+            setList([]);
+            setCount(0);
+            setIdList([]);
+            for(let i = 0; i < response.data.length; i++){
+                const newDeck = {
+                    id: response.data[i].deckId,
+                    value: response.data[i].deckName,
+                    flashcardNumber: 0
+                }
+                setCount(count+1);
+                setIdList(idList => [...idList, response.data[i].deckId]);
+                setList(list => [...list, newDeck]);
+                console.log(list)
+            }
+        })
+      }, [user]);
     
-    function handleAddItem(){
-        const newItem = {
+    function handleAddDeck(){
+        while(idList.includes(count)){
+            setCount(count+1);
+        }
+        const newDeck = {
             id: count,
             value: 'Novo Deck',
             flashcardNumber: 0
         }
+        api.post("/createDeck", {
+            userId: user?.id,
+            deckName: newDeck.value,
+            deckId: newDeck.id.toString()
+        }).catch(error => {
+            console.log(error.response)
+        })
         setCount(count+1);
-        setList(list => [...list, newItem]);
-        console.log(list)
+        setList(list => [...list, newDeck]);
     }
 
-    function handleChangeItem(value: string, id:number){
-        setList(list => list.map(item => item.id === id? {...item, value}: item))
-        
+    function handleChangeDeck(value: string, id:number){
+        setList(list => list.map(deck => deck.id === id? {...deck, value}: deck))
+        api.put("/deck", {
+            //data:{
+            userId: user?.id,
+            deckName: value,
+            deckId: id.toString()//}
+        }).catch(error => {
+            console.log(error.response)
+        })
     }
 
-    function handleDeleteItem(id: number){
-        setList(list => list.filter(item => item.id !== id))
+    function handleDeleteDeck(id: number){
+        setList(list => list.filter(deck => deck.id !== id))
+        api.delete("/deck", {
+            data:{
+            userId: user?.id,
+            deckId: id.toString()
+        }
+        }).catch(error => {
+            console.log(error.response)
+        })
     }
 
     return(
@@ -48,12 +100,12 @@ export function DeckList(){
                     name="task"
                     placeholder="Nome do Deck"
                     value={item.value}
-                    onChange={e => handleChangeItem(e.target.value, item.id)}/>
+                    onChange={e => handleChangeDeck(e.target.value, item.id)}/>
                 </EditableLabel>
-                <button onClick = {() => handleDeleteItem(item.id)}><img src={deleteIcon} alt = "edit icon"/></button>
+                <button onClick = {() => handleDeleteDeck(item.id)}><img src={deleteIcon} alt = "edit icon"/></button>
                 </div>
             ))}
-            {list.length < 22 ? <button onClick={() => handleAddItem()}><img src={addIcon} alt = "edit icon"/></button> : <></>}
+            {list.length < 22 ? <button onClick={() => handleAddDeck()}><img src={addIcon} alt = "edit icon"/></button> : <></>}
             
         </div>
     );
