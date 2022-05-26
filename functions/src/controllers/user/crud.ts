@@ -31,7 +31,11 @@ export async function getAllDecks(req:Request, res:Response) {
 
     try{
         const data = await getFirestore().collection(parms.userId).get()
-        const decks = await data.docs.map(doc => {return doc.data().deckName})
+        const decks = await data.docs.map(doc => {
+            return {
+                deckName: doc.data().deckName,
+                deckIds: doc.data().deckId
+            }})
         return res.status(200).json(decks)
     }catch (error) {
         return res.status(400).json(error)
