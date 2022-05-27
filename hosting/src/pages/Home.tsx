@@ -8,31 +8,13 @@ import '../styles/home.scss'
 
 export function Home(){
     const { user } = useAuth();
-    const [deck, setDeck] = useState();
+    const [currentDeck, setCurrentDeck] = useState<number>();
 
-    /*POST
-    useEffect(() => {
-        api.post("/createFlashCard", {
-            userId: "123",
-	        deck: "deck_1",
-	        flashCardId: "excudo",
-            term: "espada",
-	        definition: "SOU ESPADA MEU IRMÃO"
-        })
-        .then(response => {
-            console.log(response)
-        })
-    })*/
-
-    /** GET
-     * api.post("/flashcard", {
-            userId: "123",
-	        deck: "deck_1",
-	        flashCardId: "excudo",
-        })
-     * 
-     */
-
+    const changeCurrentDeck = (id: number) => {
+        setCurrentDeck(id)
+        console.log(currentDeck)
+    }
+    
     return(
         <div id = "page-home">
             <header>
@@ -48,7 +30,7 @@ export function Home(){
             </header>
             <aside>
                 <h2>Seus Decks</h2>
-                <DeckList/>
+                <DeckList changeDeck={changeCurrentDeck}/>
             </aside>
             <main>
                 <h2>Main</h2>

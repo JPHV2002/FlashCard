@@ -8,7 +8,7 @@ import { useAuth } from "../hooks/useAuth"
 
 export function Auth(){
     const navigate = useNavigate();
-    const {user,signInWithGoogle } = useAuth()
+    const { user,signInWithGoogle } = useAuth()
 
     async function handleNavigateToHome(){
         if (!user){

@@ -5,7 +5,7 @@ import api from "../services/api";
 type AuthContextType = {
     user: User | undefined;
     signInWithGoogle: () => Promise<void>;
-  }
+}
   
   type User = {
     id: string;
@@ -17,7 +17,7 @@ type AuthContextType = {
       children: ReactNode;
   }
 
-  export const AuthContext = createContext({} as AuthContextType);
+export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider(props: AuthContextProviderProps){
     const [user, setUser] = useState<User>();

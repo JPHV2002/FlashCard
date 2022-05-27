@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth"
+
 import {EditableLabel} from "./EditableLabel"
 
 import api from "../services/api";
 
 import addIcon from "../assets/images/addIcon.svg"
 import deleteIcon from "../assets/images/deleteIcon.svg"
+import openIcon from "../assets/images/openIcon.svg"
 
-import '../styles/collectionList.scss';
+import '../styles/deckList.scss';
 
 type DeckProps = {
     id: number;
@@ -15,7 +17,10 @@ type DeckProps = {
     flashcardNumber: number;
 }
 
-export function DeckList(){
+type DeckListProps = {
+    changeDeck: (id: number) => void
+}
+export function DeckList(props: DeckListProps){
     const { user } = useAuth();
     const [list, setList] = useState<DeckProps[]>([]);
     const [count, setCount] = useState(0);
@@ -43,6 +48,7 @@ export function DeckList(){
             }
         })
       }, [user]);
+      
     
     function handleAddDeck(){
         while(idList.includes(count)){
@@ -92,21 +98,23 @@ export function DeckList(){
         <div id = "list">
             {list.map(item => (
                 <div key = {item.id} className = "item">
-                <EditableLabel type = "input" text = {item.value}>
-                <input
-                    autoFocus
-                    maxLength= {20}
-                    type="text"
-                    name="task"
-                    placeholder="Nome do Deck"
-                    value={item.value}
-                    onChange={e => handleChangeDeck(e.target.value, item.id)}/>
-                </EditableLabel>
-                <button onClick = {() => handleDeleteDeck(item.id)}><img src={deleteIcon} alt = "edit icon"/></button>
+                    <EditableLabel type = "input" text = {item.value}>
+                        <input
+                        autoFocus
+                        maxLength= {20}
+                        type="text"
+                        name="task"
+                        placeholder="Nome do Deck"
+                        value={item.value}
+                        onChange={e => handleChangeDeck(e.target.value, item.id)}/>
+                    </EditableLabel>
+                    <div>
+                        <button onClick = {function (){props.changeDeck(item.id)}}><img src={openIcon} alt = "edit icon"/></button>
+                        <button onClick = {function (){handleDeleteDeck(item.id)} }><img src={deleteIcon} alt = "edit icon"/></button>
+                    </div>
                 </div>
             ))}
             {list.length < 22 ? <button onClick={() => handleAddDeck()}><img src={addIcon} alt = "edit icon"/></button> : <></>}
-            
         </div>
     );
 }
