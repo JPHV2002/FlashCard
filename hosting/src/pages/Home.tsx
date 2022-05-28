@@ -1,18 +1,18 @@
 import { useAuth } from "../hooks/useAuth"
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DeckList } from "../components/DeckList";
-import api from "../services/api";
 
 import '../styles/home.scss'
+import { FlashcardList } from "../components/FlashcardList";
 
 export function Home(){
     const { user } = useAuth();
-    const [currentDeck, setCurrentDeck] = useState<number>();
+    const [currentDeck, setCurrentDeck] = useState<number>(-1);
 
     const changeCurrentDeck = (id: number) => {
         setCurrentDeck(id)
-        console.log(currentDeck)
+        console.log("Deck selecionado: " + currentDeck)
     }
     
     return(
@@ -30,10 +30,10 @@ export function Home(){
             </header>
             <aside>
                 <h2>Seus Decks</h2>
-                <DeckList changeDeck={changeCurrentDeck}/>
+                <DeckList currentDeck = {currentDeck} changeDeck={changeCurrentDeck}/>
             </aside>
             <main>
-                <h2>Main</h2>
+                {currentDeck !== -1?<FlashcardList deckId = {currentDeck}/>:<></>}
             </main>
         </div>
     );

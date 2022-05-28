@@ -1,0 +1,103 @@
+#flashcardList {
+    #flashcardDisplay{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+    .item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 15px;
+
+        color: #fff;
+        font-size: 18px;
+        font-family: 'Poppins', sans-serif;
+
+        #flashcard{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            img{
+                height: 40px;
+            }
+        }
+
+        #flashcardsOptions{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+    }
+
+    button {
+        margin-left:15px;
+        background-color: #1B1842;
+        border:none;
+        cursor: pointer;
+        img{
+            margin-right: 10px;
+            height: 15px;
+        }
+    }
+}
+
+.btn {
+    height: 5vh;
+    border-radius: 8px;
+    border: none;
+    background-color: #1B1842;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    margin: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    &:not(:disabled):hover {
+        filter: brightness(0.85);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.modal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modalForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    input {
+        height: 45px;
+        width: 100%;
+        border: 2px solid #1B1842;
+        border-radius: 8px;
+        padding: 1px 16px;
+        margin-bottom: 10px;
+        background-color: #fff;
+    }
+    textarea{
+        border: 2px solid #1B1842;
+        border-radius: 8px;
+        resize: none;
+    }
+}

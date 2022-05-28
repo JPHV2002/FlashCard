@@ -18,6 +18,7 @@ type DeckProps = {
 }
 
 type DeckListProps = {
+    currentDeck: number
     changeDeck: (id: number) => void
 }
 export function DeckList(props: DeckListProps){
@@ -44,7 +45,6 @@ export function DeckList(props: DeckListProps){
                 setCount(count+1);
                 setIdList(idList => [...idList, response.data[i].deckId]);
                 setList(list => [...list, newDeck]);
-                console.log(list)
             }
         })
       }, [user]);
@@ -92,10 +92,11 @@ export function DeckList(props: DeckListProps){
         }).catch(error => {
             console.log(error.response)
         })
+        if(id == props.currentDeck) props.changeDeck(-1);
     }
 
     return(
-        <div id = "list">
+        <div id = "deckList">
             {list.map(item => (
                 <div key = {item.id} className = "item">
                     <EditableLabel type = "input" text = {item.value}>
@@ -109,7 +110,7 @@ export function DeckList(props: DeckListProps){
                         onChange={e => handleChangeDeck(e.target.value, item.id)}/>
                     </EditableLabel>
                     <div>
-                        <button onClick = {function (){props.changeDeck(item.id)}}><img src={openIcon} alt = "edit icon"/></button>
+                        <button onClick = {function (){props.changeDeck(item.id)}}><img src={openIcon} alt = "open icon"/></button>
                         <button onClick = {function (){handleDeleteDeck(item.id)} }><img src={deleteIcon} alt = "edit icon"/></button>
                     </div>
                 </div>

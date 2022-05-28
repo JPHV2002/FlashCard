@@ -1,37 +1,41 @@
-.item{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    margin-left: 15px;
-
-    color: #fff;
-    font-size: 18px;
-    font-family: 'Poppins', sans-serif;
-}
-
-button{
-    margin-left:15px;
-    background-color:#12102d;
-    border:none;
-    cursor: pointer;
-    img{
-        margin-right: 10px;
-        height: 15px;
+#deckList{
+    .item{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        margin-left: 15px;
+    
+        color: #fff;
+        font-size: 18px;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    button{
+        margin-left:15px;
+        background-color:#12102d;
+        border:none;
+        cursor: pointer;
+        img{
+            margin-right: 10px;
+            height: 15px;
+        }
+    }
+    
+    input[type=text] {
+        background-color: #12102d;
+        margin-left:4px;
+        outline: none;
+        color: #fff;
+        font-size: 18px;
+        width: 100%;
+        border: none;
+        border-bottom: 2px solid white;
+        box-sizing: border-box;
     }
 }
 
-input[type=text] {
-    background-color: #12102d;
-    margin-left:4px;
-    outline: none;
-    color: #fff;
-    font-size: 18px;
-    width: 100%;
-    border: none;
-    border-bottom: 2px solid white;
-    box-sizing: border-box;
-}
+
 
 @media (max-width: 1600px) {
     .item{
