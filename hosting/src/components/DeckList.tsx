@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/useAuth"
+import { useAuth } from "../hooks/useAuth";
 
-import {EditableLabel} from "./EditableLabel"
+import {EditableLabel} from "./EditableLabel";
 
 import api from "../services/api";
 
-import addIcon from "../assets/images/addIcon.svg"
-import deleteIcon from "../assets/images/deleteIcon.svg"
-import openIcon from "../assets/images/openIcon.svg"
+import addIcon from "../assets/images/addIcon.svg";
+import deleteIcon from "../assets/images/deleteIcon.svg";
+import openIcon from "../assets/images/openIcon.svg";
 
 import '../styles/deckList.scss';
 
@@ -25,14 +25,13 @@ export function DeckList(props: DeckListProps){
     const { user } = useAuth();
     const [list, setList] = useState<DeckProps[]>([]);
     const [count, setCount] = useState(0);
-    const [idList, setIdList] = useState<Number[]>([]);
+    const [idList, setIdList] = useState<number[]>([]);
 
     useEffect(() => {
         const userId = user?.id || " "
         api.post("/getDecksNames", {
             userId: userId
         }).then((response) => {
-            console.log(response.data);
             setList([]);
             setCount(0);
             setIdList([]);
@@ -42,17 +41,22 @@ export function DeckList(props: DeckListProps){
                     value: response.data[i].deckName,
                     flashcardNumber: 0
                 }
-                setCount(count+1);
                 setIdList(idList => [...idList, response.data[i].deckId]);
+                
+                setCount(count+1);
+                
                 setList(list => [...list, newDeck]);
+                
             }
         })
       }, [user]);
       
     
     function handleAddDeck(){
+        setCount(0)
         while(idList.includes(count)){
             setCount(count+1);
+            
         }
         const newDeck = {
             id: count,
@@ -66,8 +70,9 @@ export function DeckList(props: DeckListProps){
         }).catch(error => {
             console.log(error.response)
         })
-        setCount(count+1);
+        //setCount(count+1);
         setList(list => [...list, newDeck]);
+        setIdList(idList => [...idList, newDeck.id]);
     }
 
     function handleChangeDeck(value: string, id:number){
@@ -84,6 +89,7 @@ export function DeckList(props: DeckListProps){
 
     function handleDeleteDeck(id: number){
         setList(list => list.filter(deck => deck.id !== id))
+        setIdList(idList => idList.filter(id_ => id_ !== id))
         api.delete("/deck", {
             data:{
             userId: user?.id,

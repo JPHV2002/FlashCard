@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/useAuth"
+import { useAuth } from "../hooks/useAuth";
+
 
 import api from "../services/api";
 
@@ -7,7 +8,7 @@ import Modal from "react-modal"
 
 import addIcon from "../assets/images/addIcon.svg"
 import deleteIcon from "../assets/images/deleteIcon.svg"
-import openIcon from "../assets/images/openIcon.svg"
+import editIcon from "../assets/images/editIcon.svg"
 import flashcardIcon from "../assets/images/flashcardIcon.svg"
 
 import '../styles/flashcardList.scss';
@@ -65,7 +66,6 @@ export function FlashcardList(props: FlashcardListProps) {
                 userId: userId,
                 deckId: props.deckId.toString()
             }).then((response) => {
-                console.log(response.data);
                 setList([]);
                 for (let i = 0; i < response.data.flashCards.length; i++) {
                     const newFlashcard = {
@@ -75,10 +75,8 @@ export function FlashcardList(props: FlashcardListProps) {
                     }
                     setList(list => [...list, newFlashcard]);
                 }
-                console.log(list);
             })
         }
-
     }, [props.deckId]);
 
     function handleTermChange(event: React.FormEvent<HTMLInputElement>) {
@@ -148,9 +146,9 @@ export function FlashcardList(props: FlashcardListProps) {
             </Modal>
             {list.length < 22 ?
                 <div>
-                    <button onClick={openModal}><img src={addIcon} alt="add icon" /></button>
+                    <button id = "add-btn" onClick={openModal}><img src={addIcon} alt="add icon" /></button>
                 </div>
-                :<></>}
+                : <></>}
             <div id="flashcardDisplay">
                 {list.map(item => (
                     <div key={item.id} className="item">
@@ -159,7 +157,7 @@ export function FlashcardList(props: FlashcardListProps) {
                             <label>{item.term}</label>
                         </div>
                         <div id="flashcardsOptions">
-                            <button onClick={() => handleEditFlashcard(item.term, item.definition)}><img src={openIcon} alt="open icon" /></button>
+                            <button onClick={() => handleEditFlashcard(item.term, item.definition)}><img src={editIcon} alt="edit icon" /></button>
                             <button onClick={function () { handleDeleteFlashcard(item.id) }}><img src={deleteIcon} alt="delete icon" /></button>
                         </div>
                     </div>

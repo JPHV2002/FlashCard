@@ -49,6 +49,17 @@ html, body{background:#1B1842;height:100%;}
             font-weight: 400;
         }
     }
+
+    main{
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        #btn{
+            display: flex;
+            justify-content: center;
+        }
+    }
 }
 
 @media (max-width: 800px) {

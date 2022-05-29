@@ -1,19 +1,31 @@
 import { useAuth } from "../hooks/useAuth"
+import { useNavigate } from 'react-router-dom'
 
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { DeckList } from "../components/DeckList";
 
 import '../styles/home.scss'
 import { FlashcardList } from "../components/FlashcardList";
+import { DeckContext } from "../contexts/DeckContext";
+import { Button } from "../components/Button";
 
 export function Home(){
     const { user } = useAuth();
+    const navigate = useNavigate();
     const [currentDeck, setCurrentDeck] = useState<number>(-1);
+    const {setDeck} = useContext(DeckContext);
 
     const changeCurrentDeck = (id: number) => {
-        setCurrentDeck(id)
-        console.log("Deck selecionado: " + currentDeck)
+        setCurrentDeck(id);
     }
+
+    function handleNavigateToStudyRoom(){
+        navigate('/study');
+    }
+
+    useEffect(() => {
+        setDeck(currentDeck)
+    }, [currentDeck])
     
     return(
         <div id = "page-home">
@@ -34,6 +46,9 @@ export function Home(){
             </aside>
             <main>
                 {currentDeck !== -1?<FlashcardList deckId = {currentDeck}/>:<></>}
+                <div id = "btn">
+                    {currentDeck !== -1?<Button onClick = {handleNavigateToStudyRoom}>Iniciar Estudo</Button>: <></>}
+                </div>
             </main>
         </div>
     );
