@@ -12,6 +12,8 @@ const router = Router()
 
 router.post('/flashcard', getFlashCard)
 router.post('/createFlashCard', createFlashCard)
+router.put('/updateFlashCard', createFlashCard)
+router.delete('/deleteFlashCard', createFlashCard)
 
 router.post('/createUser', createUser)
 router.post('/getDecksNames', getAllDecks)
