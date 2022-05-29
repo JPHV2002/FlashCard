@@ -14,7 +14,7 @@ export async function createUser(req:Request, res:Response) {
     }
 
     try {
-        await getFirestore().collection(parms.userId).doc(deckInfo.deckId).set(deckInfo)
+        await getFirestore().collection(parms.userId).doc(deckInfo.deckId)
         return res.status(200).json({
             response: "User Created",
             data: parms.userId
@@ -34,7 +34,7 @@ export async function getAllDecks(req:Request, res:Response) {
         const decks = await data.docs.map(doc => {
             return {
                 deckName: doc.data().deckName,
-                deckIds: doc.data().deckId
+                deckId: doc.data().deckId
             }})
         return res.status(200).json(decks)
     }catch (error) {
