@@ -14,7 +14,8 @@ export async function createFlashCard(req:Request, res:Response){
 
     const flashcard: flashcardData = {
         term: userData.term,
-        definition: userData.definition
+        definition: userData.definition,
+        flashCardId: userData.flashCardId
     }
 
     try {
@@ -59,7 +60,8 @@ export async function updateFlashCard(req:Request, res:Response) {
 
     const flashcard: flashcardData = {
         term: parms.term,
-        definition: parms.definition
+        definition: parms.definition,
+        flashCardId: parms.flashCardId
     }
 
     try {

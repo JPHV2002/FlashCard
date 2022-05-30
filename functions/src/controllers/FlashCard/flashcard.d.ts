@@ -14,5 +14,6 @@ export type getFlashcardParams = {
 
 export type flashcardData = {
     term: string,
-    definition: string
+    definition: string,
+    flashCardId: string
 }
