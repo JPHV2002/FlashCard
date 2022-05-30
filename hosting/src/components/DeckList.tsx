@@ -25,7 +25,7 @@ export function DeckList(props: DeckListProps){
     const { user } = useAuth();
     const [list, setList] = useState<DeckProps[]>([]);
     const [count, setCount] = useState(0);
-    const [idList, setIdList] = useState<number[]>([]);
+    const [idList, setIdList] = useState<string[]>([]);
 
     useEffect(() => {
         const userId = user?.id || " "
@@ -41,25 +41,23 @@ export function DeckList(props: DeckListProps){
                     value: response.data[i].deckName,
                     flashcardNumber: 0
                 }
-                setIdList(idList => [...idList, response.data[i].deckId]);
-                
+                setIdList(idList => [...idList, newDeck.id]);
                 setCount(count+1);
-                
-                setList(list => [...list, newDeck]);
-                
+                setList(list => [...list, newDeck]); 
             }
         })
       }, [user]);
       
     
     function handleAddDeck(){
-        setCount(0)
-        while(idList.includes(count)){
-            setCount(count+1);
-            
+        let count_ = 0
+        console.log(idList)
+        while(idList.find(id => id === count_.toString())){
+            count_++
         }
+        setCount(count_)
         const newDeck = {
-            id: count,
+            id: count_,
             value: 'Novo Deck',
             flashcardNumber: 0
         }
@@ -72,7 +70,7 @@ export function DeckList(props: DeckListProps){
         })
         //setCount(count+1);
         setList(list => [...list, newDeck]);
-        setIdList(idList => [...idList, newDeck.id]);
+        setIdList(idList => [...idList, count_.toString()]);
     }
 
     function handleChangeDeck(value: string, id:number){
@@ -89,7 +87,7 @@ export function DeckList(props: DeckListProps){
 
     function handleDeleteDeck(id: number){
         setList(list => list.filter(deck => deck.id !== id))
-        setIdList(idList => idList.filter(id_ => id_ !== id))
+        setIdList(idList => idList.filter(id_ => id_ !== id.toString()))
         api.delete("/deck", {
             data:{
             userId: user?.id,

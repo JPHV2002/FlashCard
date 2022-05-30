@@ -1,4 +1,7 @@
 #page-study {
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
     display: flex;
     height: 100vh;
     flex-direction: column;
@@ -9,27 +12,37 @@
 
     main {
         #flashcard-study{
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            img{
+                height: 45vh;
+            }
             #card-text{
-                
                 color: black;
                 span{
                     position: absolute;
-                    font-size: 32px;
+                    font-size: 4vh; 
+                    padding-right: 2vw;
+                    text-align: center;                   
                     font-weight: bold;
-                    top: 250px;
+                    top: 3vh;
                 }
                 
                 p{
                     position: absolute;
-                    top: 300px;
+                    top: 10vh;
                     padding: 0;
-                    font-size: 20px; 
-                    max-width: 550px;
-                    max-height: 300px;
+                    font-size: 2vh;
+                    padding: 0 2vw;
+                    padding-right: 4vw;
+                    text-align: center;
+                    min-width: 35vw;
+                    max-width: 55vw;
+                    max-height: 30vh;
+                    overflow: auto;
                 }
 
                 #card-front, #card-back{
@@ -40,14 +53,13 @@
             }
             
         }
-        
-        .arrow-left {
+        #arrow-left {
             margin-right: 30px;
         }
-        
+        .arrow{
+            cursor: pointer;
+        }
         display: flex;
-
-        
     }
 
     footer {
@@ -65,7 +77,6 @@
         }
 
         p {
-
             font-size: 24px;
             font-weight: 600;
         }

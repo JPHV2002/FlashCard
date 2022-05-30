@@ -17,7 +17,7 @@ type FlashcardProps = {
     definition: string;
     isFlipped: boolean;
     isMarked: boolean;
-    isCorrect: boolean;
+    isCorrect: boolean | null;
 } | undefined
 
 export function StudyRoom() {
@@ -26,6 +26,8 @@ export function StudyRoom() {
     const { deck } = useContext(DeckContext)
     const [count, setCount] = useState<number>(0)
     const [list, setList] = useState<FlashcardProps[]>([]);
+    const [rightCount, setRightCount] = useState<number>(0)
+    const [missCount, setMissCount] = useState<number>(0)
     //const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardProps>();
 
 
@@ -45,9 +47,11 @@ export function StudyRoom() {
                         definition: response.data.flashCards[i].definition,
                         isFlipped: false,
                         isMarked: false,
-                        isCorrect: false
+                        isCorrect: null
                     }
+
                     setList(list => [...list, newFlashcard]);
+                    setList(list => list.sort(function () { return 0.5 - Math.random() }))
                     //setCurrentFlashcard(list[0])
                 }
             })
@@ -62,9 +66,65 @@ export function StudyRoom() {
                 term: flashcard.term,
                 definition: flashcard.definition,
                 isFlipped: !flashcard.isFlipped,
-                isMarked: true,
+                isMarked: false,
                 isCorrect: flashcard.isCorrect
             } : card))
+        }
+    }
+
+    function markRight() {
+        const flashcard = list[count]
+        if(flashcard) {
+            if(flashcard.isCorrect === null){
+                setList(list => list.map(card => card?.id === list[count]?.id ? {
+                    id: flashcard.id,
+                    term: flashcard.term,
+                    definition: flashcard.definition,
+                    isFlipped: flashcard.isFlipped,
+                    isMarked: true,
+                    isCorrect: true
+                } : card))
+                setRightCount(rightCount+1)
+            } else if(flashcard.isCorrect === false){
+                setList(list => list.map(card => card?.id === list[count]?.id ? {
+                    id: flashcard.id,
+                    term: flashcard.term,
+                    definition: flashcard.definition,
+                    isFlipped: flashcard.isFlipped,
+                    isMarked: true,
+                    isCorrect: true
+                } : card))
+                setRightCount(rightCount+1)
+                setMissCount(missCount-1)
+            }
+        }
+    }
+
+    function markMiss() {
+        const flashcard = list[count]
+        if(flashcard) {
+            if(flashcard.isCorrect === null){
+                setList(list => list.map(card => card?.id === list[count]?.id ? {
+                    id: flashcard.id,
+                    term: flashcard.term,
+                    definition: flashcard.definition,
+                    isFlipped: flashcard.isFlipped,
+                    isMarked: true,
+                    isCorrect: false
+                } : card))
+                setMissCount(missCount+1)
+            } else if(flashcard.isCorrect === true){
+                setList(list => list.map(card => card?.id === list[count]?.id ? {
+                    id: flashcard.id,
+                    term: flashcard.term,
+                    definition: flashcard.definition,
+                    isFlipped: flashcard.isFlipped,
+                    isMarked: true,
+                    isCorrect: false
+                } : card))
+                setMissCount(missCount+1)
+                setRightCount(rightCount-1)
+            }
         }
     }
 
@@ -84,7 +144,8 @@ export function StudyRoom() {
                     </header>
                     <main>
 
-                        <img onClick={handleGoToPreviousFlashcard} className="arrow-left" src={arrowLeftIcon} alt="" />
+                        <img onClick={handleGoToPreviousFlashcard} className="arrow" id="arrow-left" src={arrowLeftIcon} alt="" />
+
 
                         <div id="flashcard-study">
                             <div id="card-text">
@@ -100,16 +161,27 @@ export function StudyRoom() {
                                     </div>
                                 }
                             </div>
-
                             <img src={cardIcon} alt="flashcard icon" />
                         </div>
-                        <img onClick={handleGoToNextFlashcard} src={arrowIcon} alt="" />
+
+                        <img className="arrow" onClick={handleGoToNextFlashcard} src={arrowIcon} alt="" />
+
 
                     </main>
                     <footer>
+                        {
+                            list[count]?.isFlipped ? 
+                            <div>
+                                <button onClick={markRight}>Acerto</button>
+                                <button onClick={markMiss}>Erro</button>
+                            </div>
+                            :
+                                <></>
+                        }
+                        
                         <img id="flip-btn" src={flipIcon} alt="" onClick={flipCard} />
-                        <p>Acertos:</p>
-                        <p id="miss">Erros:</p>
+                        <p>Acertos: {rightCount}</p>
+                        <p id="miss">Erros: {missCount}</p>
                     </footer>
                 </div>
             }

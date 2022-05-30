@@ -40,8 +40,10 @@ export function FlashcardList(props: FlashcardListProps) {
     const { user } = useAuth();
     const [list, setList] = useState<FlashcardProps[]>([]);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [edit, setEdit] = useState(false);
     const [term, setTerm] = useState('');
     const [definition, setDefinition] = useState('');
+    const [previousTerm, setPreviousTerm] = useState('');
 
     let subtitle: HTMLHeadingElement | null;
 
@@ -91,32 +93,55 @@ export function FlashcardList(props: FlashcardListProps) {
 
     function handleAddFlashcard() {
         if (term && definition) {
-            const newFlashcard = {
-                id: term,
-                term: term,
-                definition: definition
-            }
+            
             const userId = user?.id || " "
-            api.post("/createFlashcard", {
-                userId: userId,
-                deck: props.deckId.toString(),
-                flashCardId: newFlashcard.id,
-                term: newFlashcard.term,
-                definition: newFlashcard.definition
-            }).catch(error => {
-                console.log(error.response)
-            })
-            setList(list => [...list, newFlashcard]);
+            if(!edit){
+                const newFlashcard = {
+                    id: term,
+                    term: term,
+                    definition: definition
+                }
+                api.post("/createFlashcard", {
+                    userId: userId,
+                    deck: props.deckId.toString(),
+                    flashCardId: newFlashcard.id,
+                    term: newFlashcard.term,
+                    definition: newFlashcard.definition
+                }).catch(error => {
+                    console.log(error.response)
+                })
+                setList(list => [...list, newFlashcard]);
+            }else if(edit){
+                const newFlashcard = {
+                    id: list.find(flashcard => flashcard.id == previousTerm)?.id,
+                    term: term,
+                    definition: definition
+                }
+                console.log(list.find(flashcard => flashcard.id == previousTerm))
+                console.log(newFlashcard.id)
+                setList(list => list.map(flashcard => flashcard.term === term? {...flashcard, newFlashcard}: flashcard))
+                api.put("/updateFlashCard", {
+                    userId: userId,
+                    deck: props.deckId.toString(),
+                    flashCardId: newFlashcard.id,
+                    term: newFlashcard.term,
+                    definition: newFlashcard.definition
+                }).catch(error => {
+                    console.log(error.response)
+                })
+            }
         }
+        setEdit(false);
         closeModal();
     }
 
     function handleDeleteFlashcard(id: string) {
         setList(list => list.filter(flashcard => flashcard.id !== id))
-        api.delete("/flashcard", {
+        api.delete("/deleteFlashCard", {
             data: {
                 userId: user?.id,
-                deckId: id.toString()
+                deck: props.deckId,
+                flashCardId: id
             }
         }).catch(error => {
             console.log(error.response)
@@ -124,9 +149,11 @@ export function FlashcardList(props: FlashcardListProps) {
     }
 
 
-    function handleEditFlashcard(term: string, definition: string) {
+    function handleEditFlashcard(term: string, definition: string, id: string) {
         setTerm(term);
+        setPreviousTerm(id);
         setDefinition(definition);
+        setEdit(true);
         openModal();
     }
     return (
@@ -157,7 +184,7 @@ export function FlashcardList(props: FlashcardListProps) {
                             <label>{item.term}</label>
                         </div>
                         <div id="flashcardsOptions">
-                            <button onClick={() => handleEditFlashcard(item.term, item.definition)}><img src={editIcon} alt="edit icon" /></button>
+                            <button onClick={() => handleEditFlashcard(item.term, item.definition, item.id)}><img src={editIcon} alt="edit icon" /></button>
                             <button onClick={function () { handleDeleteFlashcard(item.id) }}><img src={deleteIcon} alt="delete icon" /></button>
                         </div>
                     </div>
