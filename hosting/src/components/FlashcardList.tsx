@@ -43,7 +43,7 @@ export function FlashcardList(props: FlashcardListProps) {
     const [edit, setEdit] = useState(false);
     const [term, setTerm] = useState('');
     const [definition, setDefinition] = useState('');
-    const [previousTerm, setPreviousTerm] = useState('');
+    const [currentId, setCurrentId] = useState('');
 
     let subtitle: HTMLHeadingElement | null;
 
@@ -62,16 +62,15 @@ export function FlashcardList(props: FlashcardListProps) {
     }
 
     useEffect(() => {
-        const userId = user?.id || ""
-        if (props.deckId !== -1) {
+        if (props.deckId !== -1 && user) {
             api.post("/getDeck", {
-                userId: userId,
+                userId: user.id,
                 deckId: props.deckId.toString()
             }).then((response) => {
                 setList([]);
                 for (let i = 0; i < response.data.flashCards.length; i++) {
                     const newFlashcard = {
-                        id: response.data.flashCards[i].term,
+                        id: response.data.flashCards[i].flashCardId,
                         term: response.data.flashCards[i].term,
                         definition: response.data.flashCards[i].definition
                     }
@@ -90,10 +89,8 @@ export function FlashcardList(props: FlashcardListProps) {
         setDefinition(event.currentTarget.value);
     }
 
-
     function handleAddFlashcard() {
         if (term && definition) {
-            
             const userId = user?.id || " "
             if(!edit){
                 const newFlashcard = {
@@ -112,26 +109,24 @@ export function FlashcardList(props: FlashcardListProps) {
                 })
                 setList(list => [...list, newFlashcard]);
             }else if(edit){
-                const newFlashcard = {
-                    id: list.find(flashcard => flashcard.id == previousTerm)?.id,
+                const newFlashcard: FlashcardProps = {
+                    id: currentId,
                     term: term,
                     definition: definition
                 }
-                console.log(list.find(flashcard => flashcard.id == previousTerm))
-                console.log(newFlashcard.id)
-                setList(list => list.map(flashcard => flashcard.term === term? {...flashcard, newFlashcard}: flashcard))
                 api.put("/updateFlashCard", {
                     userId: userId,
                     deck: props.deckId.toString(),
-                    flashCardId: newFlashcard.id,
-                    term: newFlashcard.term,
-                    definition: newFlashcard.definition
+                    flashCardId: currentId,
+                    term: term,
+                    definition: definition
                 }).catch(error => {
                     console.log(error.response)
                 })
+                setList(list => list.map(flashcard => flashcard.id == currentId? newFlashcard: flashcard))
+                setEdit(false);
             }
         }
-        setEdit(false);
         closeModal();
     }
 
@@ -151,7 +146,7 @@ export function FlashcardList(props: FlashcardListProps) {
 
     function handleEditFlashcard(term: string, definition: string, id: string) {
         setTerm(term);
-        setPreviousTerm(id);
+        setCurrentId(id);
         setDefinition(definition);
         setEdit(true);
         openModal();
@@ -171,7 +166,7 @@ export function FlashcardList(props: FlashcardListProps) {
                     <button className="btn" onClick={closeModal}>Fechar</button>
                 </div>
             </Modal>
-            {list.length < 22 ?
+            {list.length < 25 ?
                 <div>
                     <button id = "add-btn" onClick={openModal}><img src={addIcon} alt="add icon" /></button>
                 </div>
@@ -180,12 +175,12 @@ export function FlashcardList(props: FlashcardListProps) {
                 {list.map(item => (
                     <div key={item.id} className="item">
                         <div id="flashcard">
-                            <img src={flashcardIcon} alt="cardIcon" />
+                            <img src={flashcardIcon} alt="cardIcon"/>
                             <label>{item.term}</label>
                         </div>
                         <div id="flashcardsOptions">
-                            <button onClick={() => handleEditFlashcard(item.term, item.definition, item.id)}><img src={editIcon} alt="edit icon" /></button>
-                            <button onClick={function () { handleDeleteFlashcard(item.id) }}><img src={deleteIcon} alt="delete icon" /></button>
+                            <button onClick={function(){handleEditFlashcard(item.term, item.definition, item.id) }}><img src={editIcon} alt="edit icon" /></button>
+                            <button onClick={function (){ handleDeleteFlashcard(item.id) }}><img src={deleteIcon} alt="delete icon" /></button>
                         </div>
                     </div>
                 ))}

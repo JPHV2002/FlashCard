@@ -119,7 +119,7 @@ export function DeckList(props: DeckListProps){
                     </div>
                 </div>
             ))}
-            {list.length < 22 ? <button onClick={() => handleAddDeck()}><img src={addIcon} alt = "edit icon"/></button> : <></>}
+            {list.length < 15 ? <button onClick={() => handleAddDeck()}><img src={addIcon} alt = "edit icon"/></button> : <></>}
         </div>
     );
 }
