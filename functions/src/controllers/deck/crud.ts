@@ -47,6 +47,11 @@ export async function deleteDeck(req:Request, res:Response) {
     }
 
     try {
+        const data = await getFirestore().collection(parms.userId).doc(parms.deckId).collection('Flashcard').get()
+        const flashCards = await data.docs.map(doc => {
+            const flashcardId = doc.data().flashCardId
+            getFirestore().collection(parms.userId).doc(parms.deckId).collection('Flashcard').doc(flashcardId).delete()
+        })
         await getFirestore().collection(parms.userId).doc(parms.deckId).delete()
         return res.status(200).json({
             status: 200,
