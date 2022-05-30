@@ -68,6 +68,24 @@
         align-items: center;
         justify-content: center;
 
+        button{
+            height: 45px;
+            width: 200px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        #right-btn{
+            background-color: #91ec35;
+            margin-right: 5px;
+        }
+        #miss-btn{
+            //color: white;
+            background-color: #FF5050;
+        }
+
         img{
             cursor: pointer;
         }

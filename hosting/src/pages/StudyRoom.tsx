@@ -28,9 +28,6 @@ export function StudyRoom() {
     const [list, setList] = useState<FlashcardProps[]>([]);
     const [rightCount, setRightCount] = useState<number>(0)
     const [missCount, setMissCount] = useState<number>(0)
-    //const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardProps>();
-
-
 
     useEffect(() => {
         const userId = user?.id || ""
@@ -52,7 +49,6 @@ export function StudyRoom() {
 
                     setList(list => [...list, newFlashcard]);
                     setList(list => list.sort(function () { return 0.5 - Math.random() }))
-                    //setCurrentFlashcard(list[0])
                 }
             })
         }
@@ -172,16 +168,16 @@ export function StudyRoom() {
                         {
                             list[count]?.isFlipped ? 
                             <div>
-                                <button onClick={markRight}>Acerto</button>
-                                <button onClick={markMiss}>Erro</button>
+                                <button id="right-btn" onClick={markRight}>Acerto</button>
+                                <button id="miss-btn" onClick={markMiss}>Erro</button>
                             </div>
                             :
                                 <></>
                         }
-                        
                         <img id="flip-btn" src={flipIcon} alt="" onClick={flipCard} />
                         <p>Acertos: {rightCount}</p>
                         <p id="miss">Erros: {missCount}</p>
+                        <button onClick = {() => navigate("/home")}>Terminar Estudo</button>
                     </footer>
                 </div>
             }
