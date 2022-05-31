@@ -70,8 +70,8 @@ export function StudyRoom() {
 
     function markRight() {
         const flashcard = list[count]
-        if(flashcard) {
-            if(flashcard.isCorrect === null){
+        if (flashcard) {
+            if (flashcard.isCorrect === null) {
                 setList(list => list.map(card => card?.id === list[count]?.id ? {
                     id: flashcard.id,
                     term: flashcard.term,
@@ -80,8 +80,8 @@ export function StudyRoom() {
                     isMarked: true,
                     isCorrect: true
                 } : card))
-                setRightCount(rightCount+1)
-            } else if(flashcard.isCorrect === false){
+                setRightCount(rightCount + 1)
+            } else if (flashcard.isCorrect === false) {
                 setList(list => list.map(card => card?.id === list[count]?.id ? {
                     id: flashcard.id,
                     term: flashcard.term,
@@ -90,16 +90,16 @@ export function StudyRoom() {
                     isMarked: true,
                     isCorrect: true
                 } : card))
-                setRightCount(rightCount+1)
-                setMissCount(missCount-1)
+                setRightCount(rightCount + 1)
+                setMissCount(missCount - 1)
             }
         }
     }
 
     function markMiss() {
         const flashcard = list[count]
-        if(flashcard) {
-            if(flashcard.isCorrect === null){
+        if (flashcard) {
+            if (flashcard.isCorrect === null) {
                 setList(list => list.map(card => card?.id === list[count]?.id ? {
                     id: flashcard.id,
                     term: flashcard.term,
@@ -108,8 +108,8 @@ export function StudyRoom() {
                     isMarked: true,
                     isCorrect: false
                 } : card))
-                setMissCount(missCount+1)
-            } else if(flashcard.isCorrect === true){
+                setMissCount(missCount + 1)
+            } else if (flashcard.isCorrect === true) {
                 setList(list => list.map(card => card?.id === list[count]?.id ? {
                     id: flashcard.id,
                     term: flashcard.term,
@@ -118,8 +118,8 @@ export function StudyRoom() {
                     isMarked: true,
                     isCorrect: false
                 } : card))
-                setMissCount(missCount+1)
-                setRightCount(rightCount-1)
+                setMissCount(missCount + 1)
+                setRightCount(rightCount - 1)
             }
         }
     }
@@ -139,26 +139,25 @@ export function StudyRoom() {
                         <h2>{count + 1}/{list.length}</h2>
                     </header>
                     <main>
-
-                        <img onClick={handleGoToPreviousFlashcard} className="arrow" id="arrow-left" src={arrowLeftIcon} alt="" />
-
-
+                        <img onClick={handleGoToPreviousFlashcard} className="arrow" id="arrow-left" src={arrowLeftIcon} alt="arrow left" />
                         <div id="flashcard-study">
-                            <div id="card-text">
-                                {list[count]?.isFlipped ?
-                                    <div id="card-front">
-                                        <span>Definição</span>
-                                        <p>{list[count]?.definition}</p>
-                                    </div>
-                                    :
-                                    <div id="card-back">
-                                        <span>Termo</span>
-                                        <p>{list[count]?.term}</p>
-                                    </div>
-                                }
+                            <div className={list[count]?.isFlipped?"isFlipped":undefined} id="card-text">
+                                <div id="card-front">
+                                    <span className="text">Termo</span>
+                                    <p className="text">{list[count]?.term}</p>
+                                    <img src={cardIcon} alt="flashcard icon" />
+                                </div>
+                                
+                                <div id="card-back">
+                                    <span className="text">Definição</span>
+                                    <p className="text">{list[count]?.definition}</p>
+                                    <img src={cardIcon} alt="flashcard icon" />
+                                </div>
+                                <img id ='inv' src={cardIcon} alt="flashcard icon" />
                             </div>
-                            <img src={cardIcon} alt="flashcard icon" />
                         </div>
+
+
 
                         <img className="arrow" onClick={handleGoToNextFlashcard} src={arrowIcon} alt="" />
 
@@ -166,18 +165,18 @@ export function StudyRoom() {
                     </main>
                     <footer>
                         {
-                            list[count]?.isFlipped ? 
-                            <div>
-                                <button id="right-btn" onClick={markRight}>Acerto</button>
-                                <button id="miss-btn" onClick={markMiss}>Erro</button>
-                            </div>
-                            :
+                            list[count]?.isFlipped ?
+                                <div>
+                                    <button id="right-btn" onClick={markRight}>Acerto</button>
+                                    <button id="miss-btn" onClick={markMiss}>Erro</button>
+                                </div>
+                                :
                                 <></>
                         }
                         <img id="flip-btn" src={flipIcon} alt="" onClick={flipCard} />
                         <p>Acertos: {rightCount}</p>
                         <p id="miss">Erros: {missCount}</p>
-                        <button onClick = {() => navigate("/home")}>Terminar Estudo</button>
+                        <button onClick={() => navigate("/home")}>Terminar Estudo</button>
                     </footer>
                 </div>
             }

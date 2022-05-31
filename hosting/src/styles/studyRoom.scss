@@ -2,6 +2,7 @@
     ::-webkit-scrollbar {
         width: 10px;
     }
+
     display: flex;
     height: 100vh;
     flex-direction: column;
@@ -10,28 +11,38 @@
     background-color: #1B1842;
     color: #fff;
 
+    
+
     main {
-        #flashcard-study{
+        #flashcard-study {
+            perspective: 10000px;
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            img{
+
+            img {
                 height: 45vh;
             }
-            #card-text{
+
+            #card-text {
+                position: relative;
+                transition: transform 0.8s;
+
+                transform-style: preserve-3d;
                 color: black;
-                span{
+
+                span {
                     position: absolute;
-                    font-size: 4vh; 
+                    font-size: 4vh;
                     padding-right: 2vw;
-                    text-align: center;                   
+                    text-align: center;
                     font-weight: bold;
                     top: 3vh;
                 }
-                
-                p{
+
+                p {
                     position: absolute;
                     top: 10vh;
                     padding: 0;
@@ -45,19 +56,36 @@
                     overflow: auto;
                 }
 
-                #card-front, #card-back{
+                #inv{
+                    visibility: hidden;
+                }
+                #card-front,
+                #card-back {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
+                    backface-visibility: hidden;
+                }
+
+                #card-back{
+                    transform: rotateY(180deg);
                 }
             }
-            
         }
+        
         #arrow-left {
             margin-right: 30px;
         }
-        .arrow{
+
+        .arrow {
             cursor: pointer;
+        }
+        
+        .isFlipped{
+            transform: rotateY(180deg);
         }
         display: flex;
     }
@@ -68,7 +96,7 @@
         align-items: center;
         justify-content: center;
 
-        button{
+        button {
             height: 45px;
             width: 200px;
             border-radius: 8px;
@@ -77,23 +105,25 @@
             border: none;
             cursor: pointer;
         }
-        #right-btn{
+
+        #right-btn {
             background-color: #91ec35;
             margin-right: 5px;
         }
-        #miss-btn{
+        
+
+        #miss-btn {
             //color: white;
             background-color: #FF5050;
         }
 
-        img{
+        img {
             cursor: pointer;
         }
 
         #miss {
             color: #FF5050;
         }
-
         p {
             font-size: 24px;
             font-weight: 600;
