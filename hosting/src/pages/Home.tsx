@@ -13,10 +13,15 @@ export function Home(){
     const { user } = useAuth();
     const navigate = useNavigate();
     const [currentDeck, setCurrentDeck] = useState<number>(-1);
-    const {setDeck} = useContext(DeckContext);
+    const {setDeck, setDeckSize, deckSize } = useContext(DeckContext);
+    const [currentDeckSize, setCurrentDeckSize] = useState<number>(deckSize);
 
     const changeCurrentDeck = (id: number) => {
         setCurrentDeck(id);
+    }
+
+    const changeCurrentDeckSize = (size: number) => {
+        setCurrentDeckSize(size);
     }
 
     function handleNavigateToStudyRoom(){
@@ -26,6 +31,10 @@ export function Home(){
     useEffect(() => {
         setDeck(currentDeck)
     }, [currentDeck])
+
+    useEffect(() => {
+        setDeckSize(currentDeckSize)
+    }, [currentDeckSize])
     
     return(
         <div id = "page-home">
@@ -42,12 +51,12 @@ export function Home(){
             </header>
             <aside>
                 <h2>Seus Decks</h2>
-                <DeckList currentDeck = {currentDeck} changeDeck={changeCurrentDeck}/>
+                <DeckList currentDeck = {currentDeck} changeDeck={changeCurrentDeck} />
             </aside>
             <main>
-                {currentDeck !== -1?<FlashcardList deckId = {currentDeck}/>:<></>}
+                {currentDeck !== -1?<FlashcardList  deckSize = {currentDeckSize} changeDeckSize= {changeCurrentDeckSize} deckId = {currentDeck}/>:<></>}
                 <div id = "btn">
-                    {currentDeck !== -1?<Button onClick = {handleNavigateToStudyRoom}>Iniciar Estudo</Button>: <></>}
+                    {currentDeck !== -1 && currentDeckSize >=10?<Button onClick = {handleNavigateToStudyRoom}>Iniciar Estudo</Button>: <></>}
                 </div>
             </main>
         </div>

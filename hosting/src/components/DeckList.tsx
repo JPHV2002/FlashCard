@@ -76,10 +76,9 @@ export function DeckList(props: DeckListProps){
     function handleChangeDeck(value: string, id:number){
         setList(list => list.map(deck => deck.id === id? {...deck, value}: deck))
         api.put("/deck", {
-            //data:{
             userId: user?.id,
             deckName: value,
-            deckId: id.toString()//}
+            deckId: id.toString()
         }).catch(error => {
             console.log(error.response)
         })
@@ -96,7 +95,9 @@ export function DeckList(props: DeckListProps){
         }).catch(error => {
             console.log(error.response)
         })
-        if(id == props.currentDeck) props.changeDeck(-1);
+        if(id == props.currentDeck){ 
+            props.changeDeck(-1);
+        }
     }
 
     return(

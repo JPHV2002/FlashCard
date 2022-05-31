@@ -11,11 +11,12 @@ import { useState } from 'react';
 
 function App() {
   const [deck, setDeck] = useState<number>(-1)
+  const [deckSize, setDeckSize] = useState<number>(0)
 
   return (
     <BrowserRouter>
       <AuthContextProvider>
-        <DeckContext.Provider value={{ deck, setDeck }}>
+        <DeckContext.Provider value={{ deck, setDeck, deckSize, setDeckSize }}>
           <Routes>
             <Route path="/" element={<Auth />} />
             <Route path="/home" element={<Home />} />

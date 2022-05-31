@@ -21,6 +21,8 @@ type FlashcardProps = {
 
 type FlashcardListProps = {
     deckId: number
+    deckSize: number
+    changeDeckSize: (id: number) => void
 }
 
 Modal.setAppElement('#root');
@@ -40,7 +42,9 @@ export function FlashcardList(props: FlashcardListProps) {
     const { user } = useAuth();
     const [list, setList] = useState<FlashcardProps[]>([]);
     const [modalIsOpen, setIsOpen] = useState(false);
+    
     const [edit, setEdit] = useState(false);
+
     const [term, setTerm] = useState('');
     const [definition, setDefinition] = useState('');
     const [currentId, setCurrentId] = useState('');
@@ -74,11 +78,14 @@ export function FlashcardList(props: FlashcardListProps) {
                         term: response.data.flashCards[i].term,
                         definition: response.data.flashCards[i].definition
                     }
-                    setList(list => [...list, newFlashcard]);
+                    setList(list => [...list, newFlashcard]);  
                 }
+                
             })
         }
     }, [props.deckId]);
+
+    useEffect(() => {props.changeDeckSize(list.length)}, [list.length])
 
     function handleTermChange(event: React.FormEvent<HTMLInputElement>) {
         event.preventDefault();
@@ -92,7 +99,7 @@ export function FlashcardList(props: FlashcardListProps) {
     function handleAddFlashcard() {
         if (term && definition) {
             const userId = user?.id || " "
-            if(!edit){
+            if(!edit && list.every(flashcard => flashcard.id != term)){
                 const newFlashcard = {
                     id: term,
                     term: term,
@@ -108,6 +115,7 @@ export function FlashcardList(props: FlashcardListProps) {
                     console.log(error.response)
                 })
                 setList(list => [...list, newFlashcard]);
+                props.changeDeckSize(props.deckSize+1)
             }else if(edit){
                 const newFlashcard: FlashcardProps = {
                     id: currentId,
@@ -132,6 +140,7 @@ export function FlashcardList(props: FlashcardListProps) {
 
     function handleDeleteFlashcard(id: string) {
         setList(list => list.filter(flashcard => flashcard.id !== id))
+        props.changeDeckSize(props.deckSize-1)
         api.delete("/deleteFlashCard", {
             data: {
                 userId: user?.id,
